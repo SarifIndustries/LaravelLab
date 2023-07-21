@@ -5,8 +5,20 @@
     <title>Palisade blades</title>
 </head>
 <body>
+
     <h1> Palisade blades maintanance page </h1>
     <h2> Security office </h2>
+
+    @auth
+
+    <p> You are loggen in. </p>
+
+    @else
+
     <h2> Register account: <a href="/register">link</a> </h2>
+
+    @endauth
+
+    
 </body>
 </html>
