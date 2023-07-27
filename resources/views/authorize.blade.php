@@ -15,5 +15,14 @@
             <button>Register</button>
         </form>
     </div>
+    <div style="border: 1px solid black; border-radius: 16px; float: center; width: 300px; text-align: center; background: #c06c84; padding: 4px">
+        <form action="/login" method="POST">
+            <h2> Login </h2>
+            @csrf
+            <input name="loginLogin" type="text" placeholder="login"> <br>
+            <input name="loginPassword" type="password" placeholder="password"> <br>
+            <button>Login</button>
+        </form>
+    </div>
 </body>
 </html>

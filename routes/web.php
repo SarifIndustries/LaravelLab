@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\SecurityController;
 
 
@@ -20,11 +22,23 @@ Route::get('/', function () {
 });
 
 Route::get('/palisade', function () {
-    return view('palisade');
+    $posts = [];
+    # $posts = Post::where('user_id', auth()->id())->get();
+    if (auth()->check()) {
+        $posts = auth()->user()->userPosts()->latest()->get();
+    }
+    return view('palisade', ['posts' => $posts]);
 });
 
-Route::get('/register', function () {
-    return view('register');
+Route::get('/authorize', function () {
+    return view('authorize');
 });
 
+
+# User
 Route::post('/register', [SecurityController::class, 'register']);
+Route::post('/login', [SecurityController::class, 'login']);
+Route::post('/logout', [SecurityController::class, 'logout']);
+
+# Blogposts
+Route::post('/create-post', [PostController::class, 'createPost']);

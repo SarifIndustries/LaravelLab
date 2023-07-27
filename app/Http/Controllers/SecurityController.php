@@ -22,4 +22,21 @@ class SecurityController extends Controller
         auth()->login($user);
         return redirect('/palisade');
     }
+
+    public function login(Request $request) {
+        $incomingFields = $request->validate([
+            'loginLogin' => 'required',
+            'loginPassword' => 'required'
+        ]);
+        if (auth()->attempt(['name' => $incomingFields['loginLogin'], 'password' => $incomingFields['loginPassword']])) {
+            $request->session()->regenerate();
+            return redirect('/palisade');
+        }
+        return redirect('/authorize');
+    }
+    
+    public function logout() {
+        auth()->logout();
+        return redirect('/palisade');
+    }
 }

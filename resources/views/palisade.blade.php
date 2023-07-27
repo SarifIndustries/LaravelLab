@@ -11,11 +11,37 @@
 
     @auth
 
-    <p> You are loggen in. </p>
+    <p> You are logged in. </p>
+    <form action="/logout" method="POST">
+        @csrf
+        <button>Logout</button>
+    </form>
+
+    <div style="border: 1px solid black; border-radius: 16px; float: center; width: 300px; text-align: center; background: #9562b3; padding: 4px">
+        <form action="/create-post" method="POST">
+            <h2> Create new note </h2>
+            @csrf
+            <input name="title" type="text" placeholder="title"> <br>
+            <textarea name="content"></textarea> <br>
+            <button>Create</button>
+        </form>
+    </div>
+
+    <hr>
+
+    <div style="border: 3px solid black; border-radius: 16px">
+        <h2> &nbsp All posts </h2>
+        @foreach($posts as $post)
+        <div style="border: 1px solid black; padding: 8px; margin: 8px; background: #dfc092">
+            <h3> {{$post['title']}} </h3>
+            <p> {{$post['content']}} </p>
+        </div>
+        @endforeach
+    </div>
 
     @else
 
-    <h2> Register account: <a href="/register">link</a> </h2>
+    <h2> Authorize access: <a href="/authorize">link</a> </h2>
 
     @endauth
 
