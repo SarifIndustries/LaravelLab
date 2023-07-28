@@ -18,4 +18,33 @@ class PostController extends Controller
         Post::create($incomingFields);
         return redirect('/palisade');
     }
+
+    public function showEditPostScreen(Post $post) {
+        if (auth()->user()->id !== $post['user_id']) {
+            return redirect('/palisade');
+        }
+        return view('edit-post', ['post' => $post]);
+    }
+
+    public function updatePost(Post $post, Request $request) {
+        if (auth()->user()->id !== $post['user_id']) {
+            return redirect('/palisade');
+        }
+        $incomingFields = $request->validate([
+            'title' => 'required',
+            'content' => 'required'
+        ]);
+        $incomingFields['title'] = strip_tags($incomingFields['title']);
+        $incomingFields['content'] = strip_tags($incomingFields['content']);
+        $post->update($incomingFields);
+        return redirect('/palisade');
+    }
+
+    public function deletePost(Post $post) {
+        if (auth()->user()->id === $post['user_id']) {
+            $post->delete();
+        }
+        
+        return redirect('/palisade');
+    }
 }

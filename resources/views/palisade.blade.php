@@ -33,8 +33,14 @@
         <h2> &nbsp All posts </h2>
         @foreach($posts as $post)
         <div style="border: 1px solid black; padding: 8px; margin: 8px; background: #dfc092">
-            <h3> {{$post['title']}} </h3>
+            <h3> {{$post['title']}} by {{$post->getUser->name}} </h3>
             <p> {{$post['content']}} </p>
+            <p> <a href="/edit-post/{{$post->id}}">Edit</a> </p>
+            <form action="/delete-post/{{$post->id}}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button>Delete</button>
+            </form>
         </div>
         @endforeach
     </div>
